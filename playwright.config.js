@@ -9,12 +9,13 @@ const config = {
   timeout: 40 * 1000,
   expect: {
     //assertion validation
-    timeout: 40 * 1000,
+    timeout: 30 * 1000,
   },
   reporter: 'html',
   use: {
     //Browser options
-    browserName: 'chromium',
+    browserName: 'firefox',
+    headless: false,
   },
 };
 
