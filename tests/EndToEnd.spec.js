@@ -21,6 +21,7 @@ test('Browser Context Playwright Test', async ({ browser, page }) => {
   console.log(allTitles);
 
   const count = await products.count();
+  // Adding ZARA COAT 3
   for (let i = 0; i < count; i++) {
     if ((await products.nth(i).locator('b').textContent()) === productName) {
       //add to cart
@@ -29,5 +30,10 @@ test('Browser Context Playwright Test', async ({ browser, page }) => {
     }
   }
 
-  //ZARA COAT 3
+  //In the cart page now
+  await page.locator("[routerlink*='cart']").click();
+  await page.locator('div li').first().waitFor();
+  const bool = await page.locator("h3:has-text('ZARA COAT 3')").isVisible();
+  expect(bool).toBeTruthy();
+  //await page.pause();
 });
