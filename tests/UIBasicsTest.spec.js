@@ -24,7 +24,19 @@ test.only('UI Control Dropdown & Radio Test', async ({ page }) => {
   const signIn = page.locator('#signInBtn');
   const dropDown = page.locator('select.form-control ');
   await dropDown.selectOption('consult');
+
+  //radio button working
   await page.locator('.radiotextsty').last().click();
   await page.locator('#okayBtn').click();
-  await page.pause();
+  //assertion
+  console.log(await page.locator('.radiotextsty').last().isChecked());
+  await expect(page.locator('.radiotextsty').last()).toBeChecked();
+
+  //checkbox working
+  await page.locator('#terms').click();
+  await expect(page.locator('.radiotextsty').last()).toBeChecked();
+  await page.locator('#terms').uncheck();
+  expect(await page.locator('#terms').isChecked()).toBeFalsy();
+
+  //await page.pause();
 });
