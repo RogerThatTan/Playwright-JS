@@ -9,8 +9,9 @@ test('Browser Context Playwright Test', async ({ browser, page }) => {
   const userPassword = page.locator('#userPassword');
   const cardBody = await page.locator('.card-body b');
   const products = page.locator('.card-body');
+  const email = 'anshika@gmail.com';
 
-  await userName.fill('anshika@gmail.com');
+  await userName.fill(email);
   await userPassword.fill('Iamking@000');
   await page.locator("[value='Login']").click();
 
@@ -50,6 +51,23 @@ test('Browser Context Playwright Test', async ({ browser, page }) => {
       break;
     }
   }
+
+  //now lets verify the email address in the cart
+  expect(page.locator(".user__name [type='text']").first()).toHaveText(email);
+
+  await page.locator('.action__submit').click();
+
+  //Order complete verification
+  await expect(page.locator('.hero-primary')).toHaveText(
+    ' Thankyou for the order. ',
+  );
+
+  const orderID = await page
+    .locator('.em-spacer-1 .ng-star-inserted')
+    .textContent();
+  console.log(orderID);
+
+  //now we will verify the order page that order is placed successfully
 
   await page.pause();
 });
