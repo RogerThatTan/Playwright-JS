@@ -18,7 +18,7 @@ test('Page Playwright Test', async ({ page }) => {
   await expect(page).toHaveTitle('Google');
 });
 
-test.only('UI Control Dropdown,Checkbox & Radio Test', async ({ page }) => {
+test('UI Control Dropdown,Checkbox & Radio Test', async ({ page }) => {
   await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
   const userName = page.locator('#username');
   const signIn = page.locator('#signInBtn');
@@ -42,4 +42,30 @@ test.only('UI Control Dropdown,Checkbox & Radio Test', async ({ page }) => {
   //checking the blinking text
   await expect(documentLink).toHaveAttribute('class', 'blinkingText');
   //await page.pause();
+});
+
+test.only('Child Window Handle Test', async ({ browser }) => {
+  const context = await browser.newContext();
+  const page = await context.newPage();
+
+  await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
+  const userName = page.locator('#username');
+  const documentLink = page.locator("[href*='documents-request']");
+
+  //this promise is for handling new tabs
+  const [newPage] = await Promise.all(
+    //to run this bellow two line parallely
+    [
+      context.waitForEvent('page'), //listen any new page open (pending,rejected,fullfilled)
+      documentLink.click(), //new page is opened
+    ],
+  );
+
+  //grabing domain from the new tab and use it into previous login page username informtaion.
+  const text = await newPage.locator('.red').textContent();
+  const arrayText = text.split('@');
+  const domain = arrayText[1].split(' ')[0];
+  console.log(domain);
+  await page.locator('#username').fill(domain);
+  await page.pause();
 });
