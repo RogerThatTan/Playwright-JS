@@ -18,11 +18,12 @@ test('Page Playwright Test', async ({ page }) => {
   await expect(page).toHaveTitle('Google');
 });
 
-test.only('UI Control Dropdown & Radio Test', async ({ page }) => {
+test.only('UI Control Dropdown,Checkbox & Radio Test', async ({ page }) => {
   await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
   const userName = page.locator('#username');
   const signIn = page.locator('#signInBtn');
   const dropDown = page.locator('select.form-control ');
+  const documentLink = page.locator("[href*='documents-request']");
   await dropDown.selectOption('consult');
 
   //radio button working
@@ -38,5 +39,7 @@ test.only('UI Control Dropdown & Radio Test', async ({ page }) => {
   await page.locator('#terms').uncheck();
   expect(await page.locator('#terms').isChecked()).toBeFalsy();
 
+  //checking the blinking text
+  await expect(documentLink).toHaveAttribute('class', 'blinkingText');
   //await page.pause();
 });
