@@ -30,10 +30,26 @@ test('Browser Context Playwright Test', async ({ browser, page }) => {
     }
   }
 
-  //In the cart page now
+  //In the cart page now and checking the right product is added
   await page.locator("[routerlink*='cart']").click();
   await page.locator('div li').first().waitFor();
   const bool = await page.locator("h3:has-text('ZARA COAT 3')").isVisible();
   expect(bool).toBeTruthy();
-  //await page.pause();
+
+  //Now Lets checkout
+  await page.locator('text=Checkout').click();
+
+  await page.locator("[placeholder*='Country']").pressSequentially('ind');
+  const dropdown = page.locator('.ta-results');
+  await dropdown.waitFor();
+  const optionsCount = await dropdown.locator('button').count();
+  for (let i = 0; i < optionsCount; i++) {
+    const text = await dropdown.locator('button').nth(i).textContent();
+    if (text === ' India') {
+      await dropdown.locator('button').nth(i).click();
+      break;
+    }
+  }
+
+  await page.pause();
 });
