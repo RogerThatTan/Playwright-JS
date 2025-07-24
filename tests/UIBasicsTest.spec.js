@@ -44,7 +44,7 @@ test('UI Control Dropdown,Checkbox & Radio Test', async ({ page }) => {
   //await page.pause();
 });
 
-test.only('Child Window Handle Test', async ({ browser }) => {
+test('Child Window Handle Test', async ({ browser }) => {
   const context = await browser.newContext();
   const page = await context.newPage();
 

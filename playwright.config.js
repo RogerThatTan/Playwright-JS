@@ -16,6 +16,8 @@ const config = {
     //Browser options
     browserName: 'firefox',
     headless: false,
+    screenshot: 'on',
+    trace: 'retain-on-failure',
   },
 };
 
