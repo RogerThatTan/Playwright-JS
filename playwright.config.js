@@ -9,7 +9,7 @@ const config = {
   timeout: 40 * 1000,
   expect: {
     //assertion validation
-    timeout: 30 * 1000,
+    timeout: 5000,
   },
   reporter: 'html',
   use: {
