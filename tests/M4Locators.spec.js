@@ -2,7 +2,7 @@ const { test, expect } = require('@playwright/test');
 const { single } = require('rxjs');
 //annonymus function doesnt need function name in modern JS
 
-test.only('Browser Context Playwright Test', async ({ browser }) => {
+test('Browser Context Playwright Test', async ({ browser }) => {
   //CHROME-plugins/cookies
 
   const context = await browser.newContext();
