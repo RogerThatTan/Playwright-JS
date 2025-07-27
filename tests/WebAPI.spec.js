@@ -4,6 +4,7 @@ const loginPayLoad = {
   userPassword: 'Iamking@000',
 };
 
+let token;
 test.beforeAll(async () => {
   const apiContext = await request.newContext();
   const loginResponse = await apiContext.post(
@@ -13,29 +14,28 @@ test.beforeAll(async () => {
     },
   );
   expect(loginResponse.ok()).toBeTruthy();
-  const loginResponseJson = loginResponse.json();
-
+  const loginResponseJson = await loginResponse.json();
   // we need to parse it to extract the token
-  const token = loginResponseJson.token;
+  token = loginResponseJson.token;
+  console.log(token);
 });
 
 test.beforeEach(() => {});
 
 test('Browser Context Playwright Test', async ({ browser, page }) => {
+  //adding token from the API into browser local storage.
+  page.addInitScript((value) => {
+    window.localStorage.setItem('token', value);
+  }, token);
+
   const productName = 'ZARA COAT 3';
-  const userName = page.locator('#userEmail');
-  const userPassword = page.locator('#userPassword');
   const cardBody = await page.locator('.card-body b');
   const products = page.locator('.card-body');
   const email = 'anshika@gmail.com';
 
-  await page.goto('https://rahulshettyacademy.com/client');
-  await userName.fill(email);
-  await userPassword.fill('Iamking@000');
-  await page.locator("[value='Login']").click();
-
   //await page.waitForLoadState('networkidle'); //we are asking to wait till the network is idle so that we can get the AllTitle of the cardboard otherwise without this wait it will reutrn empoty array due to no proper loading
   //alternate wait
+  await page.goto('https://rahulshettyacademy.com/client/#/auth/login');
   await cardBody.first().waitFor();
   const allTitles = await cardBody.allTextContents();
   console.log(allTitles);
