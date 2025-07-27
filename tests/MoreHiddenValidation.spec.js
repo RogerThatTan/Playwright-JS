@@ -12,7 +12,7 @@ test('Popup Validations', async ({ page }) => {
   await expect(page.locator('#displayed-text')).toBeHidden();
 
   //how to handle alert JS pop up which is know dialogue in PlayWright
-  await page.pause();
+  // await page.pause();
 
   page.on('dialog', (dialog) => dialog.accept());
   //   page.on('dialog', (dialog) => dialog.dismiss()); //to cancel/reject the pop up
@@ -20,5 +20,12 @@ test('Popup Validations', async ({ page }) => {
 
   //Mouse Hover
   await page.locator('#mousehover').hover();
-  await page.getByRole('link', { name: 'Top' }).click();
+  // .text
+  //Switching to another iFrames in main HTML
+  await page.pause();
+
+  const framesPage = page.frameLocator('#courses-iframe');
+  await framesPage.locator("li a[href*='lifetime-access']:visible").click();
+  const textCheck = await framesPage.locator('.text h2').textContent();
+  console.log(textCheck.split(' ')[1]);
 });
