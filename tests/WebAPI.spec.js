@@ -1,6 +1,5 @@
 const { expect, test, request } = require('@playwright/test');
-const { application } = require('express');
-const { json } = require('stream/consumers');
+const { APiUtils } = require('./utils/APiUtils');
 const loginPayLoad = {
   userEmail: 'anshika@gmail.com',
   userPassword: 'Iamking@000',
@@ -11,40 +10,15 @@ const orderPayload = {
 let token;
 let orderId;
 test.beforeAll(async () => {
-  //login API
   const apiContext = await request.newContext();
-  const loginResponse = await apiContext.post(
-    'https://rahulshettyacademy.com/api/ecom/auth/login',
-    {
-      data: loginPayLoad,
-    },
-  );
-  expect(loginResponse.ok()).toBeTruthy();
-  const loginResponseJson = await loginResponse.json();
-  // we need to parse it to extract the token
-  token = loginResponseJson.token;
-  console.log(token);
-
-  //
-  const orderResponse = await apiContext.post(
-    'https://rahulshettyacademy.com/api/ecom/order/create-order',
-    {
-      data: orderPayload,
-      headers: {
-        Authorization: token,
-        'Content-Type': 'application/json',
-      },
-    },
-  );
-  const orderResponseJson = await orderResponse.json();
-  console.log(orderResponse);
-  orderId = orderResponseJson.orders[0];
+  const apiUtils = new APiUtils(apiContext, loginPayLoad);
+  apiUtils.createOrder(orderPayload);
 });
 
-test.beforeEach(() => {});
-
 //Create order is successfull
-test('Browser Context Playwright Test', async ({ browser, page }) => {
+test('Browser Context Playwright Test', async ({ page }) => {
+  const apiUtils = new APiUtils(apiContext, loginPayLoad);
+  const orderId = createOrder(orderPayload);
   //adding token from the API into browser local storage.
   page.addInitScript((value) => {
     window.localStorage.setItem('token', value);
