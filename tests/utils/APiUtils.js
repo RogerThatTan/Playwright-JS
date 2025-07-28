@@ -1,4 +1,4 @@
-class APIUtils {
+class APiUtils {
   constructor(apiContext, loginPayLoad) {
     this.apiContext = apiContext;
     this.loginPayLoad = loginPayLoad;
@@ -12,18 +12,20 @@ class APIUtils {
     );
     const loginResponseJson = await loginResponse.json();
     // we need to parse it to extract the token
-    token = loginResponseJson.token;
+    const token = loginResponseJson.token;
     console.log(token);
     return token;
   }
 
   async createOrder(orderPayload) {
+    let response = {};
+    response.token = await this.getToken();
     const orderResponse = await this.apiContext.post(
       'https://rahulshettyacademy.com/api/ecom/order/create-order',
       {
         data: orderPayload,
         headers: {
-          Authorization: this.getToken(),
+          Authorization: response.token,
           'Content-Type': 'application/json',
         },
       },
@@ -31,8 +33,9 @@ class APIUtils {
     const orderResponseJson = await orderResponse.json();
     console.log(orderResponse);
     const orderId = orderResponseJson.orders[0];
-    return orderId;
+    response.orderId = orderId;
+    return response;
   }
 }
 
-module.exports = { APIUtils };
+module.exports = { APiUtils };

@@ -7,22 +7,20 @@ const loginPayLoad = {
 const orderPayload = {
   orders: [{ country: 'Cuba', productOrderedId: '67a8dde5c0d3e6622a297cc8' }],
 };
-let token;
-let orderId;
+
+let response;
 test.beforeAll(async () => {
   const apiContext = await request.newContext();
   const apiUtils = new APiUtils(apiContext, loginPayLoad);
-  apiUtils.createOrder(orderPayload);
+  response = await apiUtils.createOrder(orderPayload);
 });
 
 //Create order is successfull
 test('Browser Context Playwright Test', async ({ page }) => {
-  const apiUtils = new APiUtils(apiContext, loginPayLoad);
-  const orderId = createOrder(orderPayload);
   //adding token from the API into browser local storage.
   page.addInitScript((value) => {
     window.localStorage.setItem('token', value);
-  }, token);
+  }, response.token);
 
   //await page.waitForLoadState('networkidle'); //we are asking to wait till the network is idle so that we can get the AllTitle of the cardboard otherwise without this wait it will reutrn empoty array due to no proper loading
   //alternate wait
@@ -34,7 +32,7 @@ test('Browser Context Playwright Test', async ({ page }) => {
   const rows = await page.locator('tbody tr');
   for (let i = 0; i < (await rows.count()); i++) {
     const rowOrderId = await rows.nth(i).locator('th').textContent();
-    if (orderId.includes(rowOrderId)) {
+    if (response.orderId.includes(rowOrderId)) {
       await rows.nth(i).locator('button').first().click();
       break;
     }
@@ -42,7 +40,7 @@ test('Browser Context Playwright Test', async ({ page }) => {
   const orderIdDetails = await page.locator('.col-text').textContent();
   await page.pause();
 
-  expect(orderId.includes(orderIdDetails)).toBeTruthy();
+  expect(response.orderId.includes(orderIdDetails)).toBeTruthy();
 });
 
 //Verify if order created is showing history page
