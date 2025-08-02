@@ -1,14 +1,16 @@
 const { test, expect } = require('@playwright/test');
 //annonymus function doesnt need function name in modern JS
 
-test('Browser Context Playwright Test', async ({ browser }) => {
+test.only('Browser Context Playwright Test', async ({ browser }) => {
   //CHROME-plugins/cookies
 
   const context = await browser.newContext();
   const page = await context.newPage();
+  page.route('**/*.{jpg,png,jpeg}', (route) => route.abort());
 
   await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
   console.log(await page.title());
+  page.pause();
 });
 
 test('Page Playwright Test', async ({ page }) => {
@@ -47,6 +49,9 @@ test('UI Control Dropdown,Checkbox & Radio Test', async ({ page }) => {
 test('Child Window Handle Test', async ({ browser }) => {
   const context = await browser.newContext();
   const page = await context.newPage();
+  // page.route('**/*.css', (route) => route.abort());
+
+  page.route('**/*.{jpg,png,jpeg}', (route) => route.abort());
 
   await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
   const userName = page.locator('#username');
