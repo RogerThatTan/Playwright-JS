@@ -1,26 +1,34 @@
 const ExcelJs = require('exceljs');
 
-async function excelTest() {
-  let output = { row: -1, column: -1 };
+async function writeExcelTest(searchText, replaceText, change, filePath) {
   const workbook = new ExcelJs.Workbook();
-  await workbook.xlsx.readFile('ExcelJSUtil/Data/excelDownloadTest.xlsx');
+  await workbook.xlsx.readFile(filePath);
   const worksheet = workbook.getWorksheet('Sheet1');
+  const output = await readExcel(worksheet, searchText);
+  //write in the cell value
+  const cell = worksheet.getCell(output.row, output.column + change.colChange);
+  cell.value = replaceText;
+  await workbook.xlsx.writeFile(filePath);
+}
 
+async function readExcel(worksheet, searchText) {
   //print all the values in excel
+  let output = { row: -1, column: -1 };
 
   worksheet.eachRow((row, rowNumber) => {
     row.eachCell((cell, colNumber) => {
-      if (cell.value === 'Banana') {
+      if (cell.value === searchText) {
         output.row = rowNumber;
         output.column = colNumber;
       }
     });
   });
-
-  //write in the cell value
-  const cell = worksheet.getCell(output.row, output.column);
-  cell.value = 'Republic';
-  await workbook.xlsx.writeFile('ExcelJSUtil/Data/excelDownloadTest.xlsx');
+  return output;
 }
-
-excelTest();
+//update Mango Price to 350
+writeExcelTest(
+  'Apple',
+  350,
+  { rowChange: 0, colChange: 2 },
+  'ExcelJSUtil/Data/excelDownloadTest.xlsx',
+);
