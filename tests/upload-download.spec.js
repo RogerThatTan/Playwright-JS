@@ -26,6 +26,7 @@ async function readExcel(worksheet, searchText) {
   });
   return output;
 }
+
 //update Mango Price to 350
 // writeExcelTest(
 //   'Apple',
@@ -35,6 +36,8 @@ async function readExcel(worksheet, searchText) {
 // );
 
 test('Upload Download Excel Validation', async ({ page }) => {
+  const textSearch = 'Mango';
+  const updateValue = '350';
   await page.goto(
     'https://rahulshettyacademy.com/upload-download-test/index.html',
   );
@@ -42,8 +45,8 @@ test('Upload Download Excel Validation', async ({ page }) => {
   await page.getByRole('button', { name: 'Download' }).click();
   await downloadPromise;
   writeExcelTest(
-    'Apple',
-    350,
+    textSearch,
+    updateValue,
     { rowChange: 0, colChange: 2 },
     'ExcelJSUtil/Data/excelDownloadTest.xlsx',
   );
@@ -54,5 +57,9 @@ test('Upload Download Excel Validation', async ({ page }) => {
     .setInputFiles(
       'C:/Users/xtanv/OneDrive/Desktop/Github Repository/Playwright-JS/ExcelJSUtil/Data/excelDownloadTest.xlsx',
     );
-  await page.pause();
+
+  //Assertions
+  const textLocator = await page.getByText(textSearch);
+  const desiredRow = await page.getByRole('row').filter({ has: textLocator });
+  expect(desiredRow.locator('#cell-4-undefined')).toContainText(updateValue);
 });
