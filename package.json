@@ -22,7 +22,6 @@
     "@types/node": "^24.0.15"
   },
   "dependencies": {
-    "excel": "^1.0.1",
-    "js": "^0.1.0"
+    "exceljs": "^4.4.0"
   }
 }
