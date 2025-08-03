@@ -1,11 +1,11 @@
 const { test, expect } = require('@playwright/test');
-const { LoginPage } = require('../pageobjects/LoginPage.js');
-const { DashboardPage } = require('../pageobjects/DashBoardPage.js');
-//annonymus function doesnt need function name in modern JS
+const { POManager } = require('../pageobjects/POManager.js');
 
+//annonymus function doesnt need function name in modern JS
 test('Browser Context Playwright Test', async ({ browser, page }) => {
-  const loginPage = new LoginPage(page);
-  const dashboardPage = new DashboardPage(page);
+  const poManger = new POManager(page);
+  const loginPage = poManger.getLoginPage();
+  const dashboardPage = poManger.getDashboardPage();
   const email = 'universuswebtech@gmail.com';
   const password = 'Iamking@000';
   const productName = 'ZARA COAT 3';
