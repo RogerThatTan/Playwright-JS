@@ -1,5 +1,6 @@
 // @ts-check
 import { chromium, defineConfig, devices } from '@playwright/test';
+import { permission } from 'process';
 
 /**
  * @see https://playwright.dev/docs/test-configuration
@@ -18,9 +19,11 @@ const config = {
       use: {
         //Browser options
         browserName: 'chromium',
-        headless: true,
+        headless: false,
         screenshot: 'only-on-failure',
+        video: 'retain-on-failure',
         trace: 'on',
+        ...devices['iPhone 11'],
       },
     },
     {
@@ -28,9 +31,13 @@ const config = {
       use: {
         //Browser options
         browserName: 'firefox',
-        headless: true,
+        headless: false,
         screenshot: 'on',
+        video: 'on-first-retry',
+        ignoreHttpsErrors: true, //ssl ignore
+        permissions: ['geolocation'], //for google location permissions
         trace: 'on',
+        viewport: { width: 720, height: 720 },
       },
     },
   ],
