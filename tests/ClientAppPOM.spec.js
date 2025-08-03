@@ -1,4 +1,5 @@
 const { test, expect } = require('@playwright/test');
+const { customtest } = require('../utils/test-base.js');
 const { POManager } = require('../pageobjects/POManager.js');
 //Json->string->js object
 const dataSet = JSON.parse(
@@ -31,3 +32,24 @@ for (const data of dataSet) {
     expect(orderId.includes(await ordersHistoryPage.getOrderId())).toBeTruthy();
   });
 }
+
+customtest.only(
+  `Parametrized Data Custom Test`,
+  async ({ page, testDataForOrder }) => {
+    const poManager = new POManager(page);
+    const loginPage = poManager.getLoginPage();
+    const dashboardPage = poManager.getDashboardPage();
+    await loginPage.goTo();
+    await loginPage.validLogin(
+      testDataForOrder.username,
+      testDataForOrder.password,
+    );
+    await dashboardPage.searchProductAddCart(testDataForOrder.productName);
+    await dashboardPage.navigateToCart();
+
+    //In the cart page now and checking the right product is added
+    const cartPage = poManager.getCartPage();
+    await cartPage.VerifyProductIsDisplayed(testDataForOrder.productName);
+    await cartPage.Checkout();
+  },
+);
