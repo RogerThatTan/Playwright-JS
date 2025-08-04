@@ -1,7 +1,7 @@
 const { expect, test, request } = require('@playwright/test');
-const { APiUtils } = require('./utils/APiUtils');
+const { APiUtils } = require('../utils/APiUtils');
 const loginPayLoad = {
-  userEmail: 'anshika@gmail.com',
+  userEmail: 'universuswebtech@gmail.com',
   userPassword: 'Iamking@000',
 };
 const orderPayload = {

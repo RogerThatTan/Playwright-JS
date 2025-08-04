@@ -6,7 +6,7 @@ import { chromium, defineConfig, devices } from '@playwright/test';
  */
 const config = {
   testDir: './tests',
-  timeout: 30 * 1000,
+  timeout: 10 * 1000,
   expect: {
     //assertion validation
     timeout: 5000,
@@ -16,7 +16,7 @@ const config = {
     //Browser options
     browserName: 'firefox',
     headless: false,
-    screenshot: 'on',
+    screenshot: 'only-on-failure',
     trace: 'on',
   },
 };

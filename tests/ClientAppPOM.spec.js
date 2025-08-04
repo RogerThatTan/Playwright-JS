@@ -33,7 +33,7 @@ for (const data of dataSet) {
   });
 }
 
-customtest.only(
+customtest(
   `Parametrized Data Custom Test`,
   async ({ page, testDataForOrder }) => {
     const poManager = new POManager(page);
