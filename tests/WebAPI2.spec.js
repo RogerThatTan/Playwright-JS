@@ -19,7 +19,7 @@ test.beforeAll(async ({ browser }) => {
   webContext = await browser.newContext({ storageState: 'state.json' });
 });
 
-test('Client App login', async () => {
+test('@API Client App login', async () => {
   const email = 'anshika@gmail.com';
   const productName = 'ZARA COAT 3';
   const page = await webContext.newPage();
