@@ -1,5 +1,7 @@
 const { test, expect } = require('@playwright/test');
 
+// test.describe.configure({ mode: 'parallel' });
+test.describe.configure({ mode: 'serial' }); //if one fails then all the other incomplete tests will be skipped
 test('Popup Validations', async ({ page }) => {
   await page.goto('https://rahulshettyacademy.com/AutomationPractice/');
   //   await page.goto('https://www.google.com/');

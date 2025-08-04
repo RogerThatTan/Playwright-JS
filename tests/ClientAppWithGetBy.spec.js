@@ -7,7 +7,7 @@ test('E2E With GetByLocators Test', async ({ page }) => {
   const userPassword = page.locator('#userPassword');
   const cardBody = await page.locator('.card-body b');
   const products = page.locator('.card-body');
-  const email = 'anshika@gmail.com';
+  const email = 'universuswebtech@gmail.com';
 
   await page.getByPlaceholder('email@example.com').fill(email);
   await page.getByPlaceholder('enter your passsword').fill('Iamking@000');

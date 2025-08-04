@@ -8,6 +8,7 @@ import { permission } from 'process';
 const config = {
   testDir: './tests',
   retries: 1, //failed test will re try again according to the number
+  workers: 3, // it will use 1 worker for multiple tests
   timeout: 10 * 1000,
   expect: {
     //assertion validation

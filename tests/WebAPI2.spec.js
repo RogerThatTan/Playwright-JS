@@ -8,7 +8,9 @@ test.beforeAll(async ({ browser }) => {
   const context = await browser.newContext();
   const page = await context.newPage();
   await page.goto('https://rahulshettyacademy.com/client');
-  await page.getByPlaceholder('email@example.com').fill('anshika@gmail.com');
+  await page
+    .getByPlaceholder('email@example.com')
+    .fill('universuswebtech@gmail.com');
   await page.getByPlaceholder('enter your passsword').fill('Iamking@000');
   await page.getByRole('button', { name: 'login' }).click();
   await page.waitForLoadState('networkidle');
