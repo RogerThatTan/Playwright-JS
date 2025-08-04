@@ -7,9 +7,7 @@ const dataSet = JSON.parse(
 );
 
 for (const data of dataSet) {
-  test.only(`Parametrized Data Test for ${data.productName}`, async ({
-    page,
-  }) => {
+  test(`Parametrized Data Test for ${data.productName}`, async ({ page }) => {
     const poManager = new POManager(page);
     const loginPage = poManager.getLoginPage();
     const dashboardPage = poManager.getDashboardPage();

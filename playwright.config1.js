@@ -7,7 +7,8 @@ import { permission } from 'process';
  */
 const config = {
   testDir: './tests',
-  timeout: 30 * 1000,
+  retries: 1, //failed test will re try again according to the number
+  timeout: 10 * 1000,
   expect: {
     //assertion validation
     timeout: 5000,
@@ -23,7 +24,7 @@ const config = {
         screenshot: 'only-on-failure',
         video: 'retain-on-failure',
         trace: 'on',
-        ...devices['iPhone 11'],
+        //...devices['iPhone 11'],
       },
     },
     {
