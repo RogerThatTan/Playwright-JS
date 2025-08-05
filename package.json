@@ -7,7 +7,8 @@
     "regression": "npx playwright test",
     "webTests": "npx playwright test --grep @Web",
     "APITests": "npx playwright test --grep @API",
-    "ChromiumConfigFile": "npx playwright test --config playwright.config1.js --project=chrome"
+    "ChromiumConfigFile": "npx playwright test --config playwright.config1.js --project=chrome",
+    "CCRegression": "npx cucumber-js --tags '@Regression' --retry 1 --exit --format html:cucumber-report.html"
   },
   "repository": {
     "type": "git",
