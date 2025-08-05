@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/RogerThatTan/Playwright-JS#readme",
   "devDependencies": {
+    "@cucumber/cucumber": "^11.3.0",
     "@playwright/test": "^1.54.1",
     "@types/node": "^24.0.15",
     "allure-playwright": "^3.3.2",
