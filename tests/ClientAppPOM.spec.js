@@ -10,9 +10,9 @@ for (const data of dataSet) {
   test(`Parametrized Data Test for ${data.productName}`, async ({ page }) => {
     const poManager = new POManager(page);
     const loginPage = poManager.getLoginPage();
-    const dashboardPage = poManager.getDashboardPage();
     await loginPage.goTo();
     await loginPage.validLogin(data.username, data.password);
+    const dashboardPage = poManager.getDashboardPage();
     await dashboardPage.searchProductAddCart(data.productName);
     await dashboardPage.navigateToCart();
 
