@@ -8,7 +8,10 @@ const {
 const { POManager } = require('../../pageobjects/POManager.js');
 const playwright = require('@playwright/test');
 
-Before(async function () {
+// { tags: '@foo or @Regression' }
+// { tags: '@foo and @Regression' }
+
+Before({ tags: '@foo or @Regression' }, async function () {
   const browser = await playwright.chromium.launch({ headless: false });
   const context = await browser.newContext();
   this.page = await context.newPage();
