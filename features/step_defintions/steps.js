@@ -7,10 +7,7 @@ Given(
   { timeout: 100 * 1000 },
   async function (username, password) {
     // Write code here that turns the phrase above into concrete actions
-    const browser = await playwright.chromium.launch({ headless: false });
-    const context = await browser.newContext();
-    const page = await context.newPage();
-    this.poManager = new POManager(page);
+
     const loginPage = this.poManager.getLoginPage();
     await loginPage.goTo();
     await loginPage.validLogin(username, password);
