@@ -2,8 +2,14 @@ class APiUtils {
   constructor(apiContext, loginPayLoad) {
     this.apiContext = apiContext;
     this.loginPayLoad = loginPayLoad;
+    this.cachedToken = null;
   }
   async getToken() {
+    // Return cached token if available to avoid redundant API calls
+    if (this.cachedToken) {
+      return this.cachedToken;
+    }
+    
     const loginResponse = await this.apiContext.post(
       'https://rahulshettyacademy.com/api/ecom/auth/login',
       {
@@ -14,6 +20,7 @@ class APiUtils {
     // we need to parse it to extract the token
     const token = loginResponseJson.token;
     console.log(token);
+    this.cachedToken = token;
     return token;
   }
 

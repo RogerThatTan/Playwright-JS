@@ -7,10 +7,12 @@ class OrdersHistoryPage {
   }
   async searchOrderAndSelect(orderId) {
     await this.ordersTable.waitFor();
-    for (let i = 0; i < (await this.rows.count()); ++i) {
-      const rowOrderId = await this.rows.nth(i).locator('th').textContent();
+    const rowsCount = await this.rows.count();
+    for (let i = 0; i < rowsCount; ++i) {
+      const row = this.rows.nth(i);
+      const rowOrderId = await row.locator('th').textContent();
       if (orderId.includes(rowOrderId)) {
-        await this.rows.nth(i).locator('button').first().click();
+        await row.locator('button').first().click();
         break;
       }
     }

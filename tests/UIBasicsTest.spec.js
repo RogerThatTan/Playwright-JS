@@ -10,7 +10,6 @@ test.only('Browser Context Playwright Test', async ({ browser }) => {
 
   await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
   console.log(await page.title());
-  page.pause();
 });
 
 test('Page Playwright Test', async ({ page }) => {
@@ -72,5 +71,4 @@ test('Child Window Handle Test', async ({ browser }) => {
   const domain = arrayText[1].split(' ')[0];
   console.log(domain);
   await page.locator('#username').fill(domain);
-  await page.pause();
 });

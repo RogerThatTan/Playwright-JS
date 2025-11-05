@@ -11,13 +11,13 @@ class DashboardPage {
     const allTitles = await this.productsText.allTextContents();
     console.log(allTitles);
     const count = await this.products.count();
-    // Adding ZARA COAT 3
+    // Adding product to cart - optimized to reduce DOM queries
     for (let i = 0; i < count; i++) {
-      if (
-        (await this.products.nth(i).locator('b').textContent()) === productName
-      ) {
+      const product = this.products.nth(i);
+      const productTitle = await product.locator('b').textContent();
+      if (productTitle === productName) {
         //add to cart
-        await this.products.nth(i).locator('text= Add To Cart').click();
+        await product.locator('text= Add To Cart').click();
         break;
       }
     }

@@ -11,7 +11,7 @@ class OrdersReviewPage {
     this.orderId = page.locator('.em-spacer-1 .ng-star-inserted');
   }
   async searchCountryAndSelect(countryCode, countryName) {
-    await this.country.type(countryCode, { delay: 100 });
+    await this.country.fill(countryCode);
     await this.dropdown.waitFor();
     const optionsCount = await this.dropdown.locator('button').count();
     for (let i = 0; i < optionsCount; ++i) {
