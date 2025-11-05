@@ -1,34 +1,49 @@
 const { LoginPage } = require('./LoginPage.js');
-const { DashboardPage } = require('./DashBoardPage.js');
+const { DashboardPage } = require('./DashboardPage.js');
 const { CartPage } = require('./CartPage.js');
 const { OrdersHistoryPage } = require('./OrdersHistoryPage');
 const { OrdersReviewPage } = require('./OrdersReviewPage');
 class POManager {
   constructor(page) {
     this.page = page;
-    this.loginPage = new LoginPage(this.page);
-    this.dashboardPage = new DashboardPage(this.page);
-    this.cartPage = new CartPage(this.page);
-    this.ordersHistoryPage = new OrdersHistoryPage(this.page);
-    this.ordersReviewPage = new OrdersReviewPage(this.page);
+    this._loginPage = null;
+    this._dashboardPage = null;
+    this._cartPage = null;
+    this._ordersHistoryPage = null;
+    this._ordersReviewPage = null;
   }
 
   getLoginPage() {
-    return this.loginPage;
+    if (!this._loginPage) {
+      this._loginPage = new LoginPage(this.page);
+    }
+    return this._loginPage;
   }
   getCartPage() {
-    return this.cartPage;
+    if (!this._cartPage) {
+      this._cartPage = new CartPage(this.page);
+    }
+    return this._cartPage;
   }
   getDashboardPage() {
-    return this.dashboardPage;
+    if (!this._dashboardPage) {
+      this._dashboardPage = new DashboardPage(this.page);
+    }
+    return this._dashboardPage;
   }
 
   getOrdersHistoryPage() {
-    return this.ordersHistoryPage;
+    if (!this._ordersHistoryPage) {
+      this._ordersHistoryPage = new OrdersHistoryPage(this.page);
+    }
+    return this._ordersHistoryPage;
   }
 
   getOrdersReviewPage() {
-    return this.ordersReviewPage;
+    if (!this._ordersReviewPage) {
+      this._ordersReviewPage = new OrdersReviewPage(this.page);
+    }
+    return this._ordersReviewPage;
   }
 }
 module.exports = { POManager };

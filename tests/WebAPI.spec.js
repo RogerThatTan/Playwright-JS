@@ -30,15 +30,16 @@ test('Browser Context Playwright Test', async ({ page }) => {
   await page.locator("button[routerlink*='myorders']").click();
   await page.locator('tbody').waitFor();
   const rows = await page.locator('tbody tr');
-  for (let i = 0; i < (await rows.count()); i++) {
-    const rowOrderId = await rows.nth(i).locator('th').textContent();
+  const rowsCount = await rows.count();
+  for (let i = 0; i < rowsCount; i++) {
+    const row = rows.nth(i);
+    const rowOrderId = await row.locator('th').textContent();
     if (response.orderId.includes(rowOrderId)) {
-      await rows.nth(i).locator('button').first().click();
+      await row.locator('button').first().click();
       break;
     }
   }
   const orderIdDetails = await page.locator('.col-text').textContent();
-  await page.pause();
 
   expect(response.orderId.includes(orderIdDetails)).toBeTruthy();
 });
