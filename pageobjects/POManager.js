@@ -1,5 +1,5 @@
 const { LoginPage } = require('./LoginPage.js');
-const { DashboardPage } = require('./DashBoardPage.js');
+const { DashboardPage } = require('./DashboardPage.js');
 const { CartPage } = require('./CartPage.js');
 const { OrdersHistoryPage } = require('./OrdersHistoryPage');
 const { OrdersReviewPage } = require('./OrdersReviewPage');
