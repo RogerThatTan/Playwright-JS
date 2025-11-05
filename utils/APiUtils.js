@@ -6,6 +6,8 @@ class APiUtils {
   }
   async getToken() {
     // Return cached token if available to avoid redundant API calls
+    // Note: This simple cache doesn't handle token expiration.
+    // For production use, consider implementing token TTL checking.
     if (this.cachedToken) {
       return this.cachedToken;
     }
