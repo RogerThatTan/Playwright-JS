@@ -13,11 +13,13 @@ class OrdersReviewPage {
   async searchCountryAndSelect(countryCode, countryName) {
     await this.country.fill(countryCode);
     await this.dropdown.waitFor();
-    const optionsCount = await this.dropdown.locator('button').count();
+    const buttons = this.dropdown.locator('button');
+    const optionsCount = await buttons.count();
     for (let i = 0; i < optionsCount; ++i) {
-      const text = await this.dropdown.locator('button').nth(i).textContent();
+      const button = buttons.nth(i);
+      const text = await button.textContent();
       if (text.trim() === countryName) {
-        await this.dropdown.locator('button').nth(i).click();
+        await button.click();
         break;
       }
     }

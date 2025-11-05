@@ -12,7 +12,8 @@ class LoginPage {
     await this.userName.fill(userName);
     await this.password.fill(password);
     await this.signInbutton.click();
-    await this.page.waitForLoadState('networkidle');
+    // Wait for dashboard to load by waiting for products to appear
+    await this.page.locator('.card-body').first().waitFor();
   }
 }
 module.exports = { LoginPage };
